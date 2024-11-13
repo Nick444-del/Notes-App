@@ -20,10 +20,10 @@ const noteSchema = new schema({
         default: false
     },
     userId: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         required: true
     },
-    date: { type: Date, default: Date.now },
+    date: { type: Date, default: new Date().getTime() },
 });
 
 export default mongoose.model("notes", noteSchema);

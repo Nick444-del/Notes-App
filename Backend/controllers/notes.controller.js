@@ -2,25 +2,42 @@
 import notesModel from "../models/notes.model";
 
 export const createNote = async (req, res) => {
-    try{
-        const { title, content, tags, userId } = req.body;
-        const newNote = await notesModel.create({
-            title: title,
-            content: content,
-            tags: tags || [],
-            userId: userId
-        });
+    const { title, content, tags } = req.body;
+    const { user } = req.user;
 
-        return res.status(201).json({
-            data: newNote,
-            message: "Note created successfully",
-            success: true
-        });
+    if(!title){
+        return res.status(400).json({
+            error: true,
+            message: "Title is required"
+        })
+    }
+
+    if(!content){
+        return res.status(400).json({
+            error: true,
+            message: "Content is required"
+        })
+    }
+
+    try{
+        const note = new notesModel({
+            title,
+            content,
+            tags: tags || [],
+            userId: user._id
+        })
+
+        await note.save();
+        return res.json({
+            error: false,
+            note,
+            message: "Note saved successfully"
+        })
     }catch(err){
-        return res.status(500).json({
-            message: err.message,
-            success: false
-        });
+        return res.status(400).json({
+            error: true,
+            message: err.message
+        })
     }
 }
 
@@ -72,6 +89,25 @@ export const updateNotes = async (req, res) => {
         return res.status(500).json({
             message: error.message,
             success: false
+        })
+    }
+}
+
+export const getAllNotes = async (req, res) => {
+    const { user } = req.user;
+
+    try {
+        const notes = await notesModel.find({ userid: user._id }).sort({ isPinned: -1 })
+
+        return res.json({
+            error: false,
+            notes,
+            message: "All notes fetched successfully"
+        })
+    } catch (error) {
+        return res.status(500).json({
+            error: true,
+            message: "Internal Server Error"
         })
     }
 }

@@ -16,6 +16,7 @@ const Home = () => {
     })
 
     const [userInfo, setUserInfo] = useState(null);
+    const [allNotes, setAllNotes] = useState([]);
 
     const navigate = useNavigate();
 
@@ -33,7 +34,19 @@ const Home = () => {
         }
     }
 
+    const getAllNotes = async () => {
+        try {
+            const response = await axiosInstance.get("/getallnotes")
+            if(response.data && response.data.notes){
+                setAllNotes(response.data.notes)
+            }
+        } catch (error) {
+            console.log("An unexpected error occurred. Please try again")
+        }
+    }
+
     useEffect(() => {
+        getAllNotes();
         getUserInfo();
     }, [])
 
