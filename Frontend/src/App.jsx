@@ -4,6 +4,8 @@ import Home from './pages/Home/Home'
 import Login from './pages/Login/Login'
 import SignUp from './pages/SignUp/SignUp'
 import Admin from './pages/admin/Admin'
+import Trash from './pages/Trash/Trash'
+import Archive from './pages/archive/Archive'
 
 const routes = (
   <Router>
@@ -12,6 +14,8 @@ const routes = (
       <Route path='/login' exact element={<Login />}></Route>
       <Route path='/signup' exact element={<SignUp />}></Route>
       <Route path='/admin' exact element={<Admin />}></Route>
+      <Route path='/archive' exact element={<Archive />}></Route>
+      <Route path='/trash' exact element={<Trash />}></Route>
     </Routes>
   </Router>
 )

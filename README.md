@@ -8,8 +8,9 @@
 * react-modal
 * react-icons
 * tailwindcss
+* moment
 
-## Backend Techonologies used
+## Backend Technologies used
 
 * @babel/cli
 * @babel/core
@@ -25,3 +26,6 @@
 ## Database used
 
 * MongoDB
+
+## Package usage
+
